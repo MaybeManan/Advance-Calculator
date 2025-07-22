@@ -11,6 +11,7 @@
 
 A modular command-line calculator built with Python, designed to handle a wide range of operations including arithmetic, algebra, trigonometry, logarithms, and calculus. This project emphasizes clean code organization, extensibility, and foundational learning in symbolic computation.
 
+⚠️ **Note:** This project is actively being developed. Stay tuned for updates and improvements!
 ---
 
 ## 📁 Project Overview
