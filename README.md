@@ -20,10 +20,10 @@ A modular command-line calculator built with Python, designed to handle a wide r
 calculator-advance/
 ├── basic.py              → Core arithmetic operations
 ├── calculus_module.py    → Symbolic differentiation & integration
-├── trigno.py        → Trig functions with degree/radian support
+├── trigno.py             → Trig functions with degree/radian support
 ├── algebra.py            → Simplify, expand, factor expressions
 ├── log.py                → Logarithmic operations (base 10, e, etc.)
-├── calculator.py               → CLI interface and dispatcher logic
+├── calculator.py         → CLI interface and dispatcher logic
 └── README.md             → You're reading it
 ```
 
