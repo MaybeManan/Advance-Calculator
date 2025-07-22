@@ -23,7 +23,7 @@ calculator-advance/
 ├── trigno.py        → Trig functions with degree/radian support
 ├── algebra.py            → Simplify, expand, factor expressions
 ├── log.py                → Logarithmic operations (base 10, e, etc.)
-├── main.py               → CLI interface and dispatcher logic
+├── calculator.py               → CLI interface and dispatcher logic
 └── README.md             → You're reading it
 ```
 
