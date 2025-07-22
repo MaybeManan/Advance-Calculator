@@ -39,15 +39,17 @@ calculator-advance/
 
 ## 🔧 Requirements
 
-- Python 3.8+
+- Python 3.10+
 - Libraries:
   - [`sympy`](https://pypi.org/project/sympy/)
   - `math` (standard library)
+  - `pytest`(for testing)
 
 Install dependencies:
 
 ```bash
 pip install sympy
+pip install pytest
 ```
 
 ---
