@@ -42,7 +42,7 @@ def main():
             print(
                 "\nChoose an arithmetic operation:\n"
                 "1. Addition (+)\n2. Subtraction (−)\n3. Multiplication (×)\n"
-                "4. Division (÷)\n5. Power (x^y)\n6. Root (y√x)\n"
+                "4. Division (÷)\n5. Power (x^y)\n6. Root (√x)\n"
             )
 
             operator = input("> ").strip().lower()
