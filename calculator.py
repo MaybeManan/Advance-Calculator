@@ -2,29 +2,6 @@
 # Break whole logic in different functions not only main()
 # Add a Menu option
 
-from basic import add, subtract, multiply, divide, power
-from calculus_module import dif, integrates
-from combinatorics import fact, permutation, combination
-from algebra import simplifies, expands, factorize, substitute
-from log import log10, ln, log, antilog10, antiln, antilog
-from trigno import (
-    deg_to_rad,
-    rad_to_deg,
-    sin,
-    cos,
-    tan,
-    cot,
-    sec,
-    csc,
-    asin,
-    acos,
-    atan,
-    acot,
-    asec,
-    acsc,
-)
-
-
 def main():
     while True:
         print(
@@ -108,6 +85,8 @@ def main():
 
 
 def arithmetic(operator):
+    from basic import add, subtract, multiply, divide, power
+
     if operator in ("root", "√", "r", "6"):
         a = int(input("Number: "))
         if a >= 0:
@@ -135,10 +114,13 @@ def arithmetic(operator):
         return "Invalid operation."
 
 
-def algebra(operator): ...
+def algebra(operator):
+    from algebra import simplifies, expands, factorize, substitute
 
 
 def calculus(operator):
+    from calculus_module import dif, integrates
+
     if operator in ("differentiation", "1", "d"):
         d = input("Enter the expression to differentiate: ")
         wrt = input("With respect to: ")
@@ -152,6 +134,8 @@ def calculus(operator):
 
 
 def pnc(operator):
+    from combinatorics import fact, permutation, combination
+
     if operator in ("factorial", "f", "1"):
         n = int(input("Enter n: "))
         return f"n! = {fact(n)}"
@@ -167,10 +151,27 @@ def pnc(operator):
         return "Invalid combinatorics operation."
 
 
-def trignometry(operator): ...
+def logarithm(operator):
+    from log import log10, ln, log, antilog10, antiln, antilog
 
 
-def logarithm(operator): ...
+def trignometry(operator):
+    from trigno import (
+        deg_to_rad,
+        rad_to_deg,
+        sin,
+        cos,
+        tan,
+        cot,
+        sec,
+        csc,
+        asin,
+        acos,
+        atan,
+        acot,
+        asec,
+        acsc,
+    )
 
 
 if __name__ == "__main__":
