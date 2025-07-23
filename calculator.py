@@ -1,5 +1,4 @@
 # Error handling not done
-# Break whole logic in different functions not only main()
 # Add a Menu option
 
 def main():
@@ -14,7 +13,7 @@ def main():
             "6. Trigonometry (Conversion, Trig functions, Inverse functions)\n"
         )
 
-        operation = input("> ").strip().lower()
+        operation = input(">> ").strip().lower()
 
         match operation:
             case "1" | "arithmetic":
@@ -34,7 +33,7 @@ def main():
                     "3. Factor Expression\n"
                     "4. Substitute Values in Expression\n"
                 )
-                operator = input("> ").strip().lower()
+                operator = input(">> ").strip().lower()
                 print(algebra(operator))
 
             case "3" | "calculus":
@@ -43,7 +42,7 @@ def main():
                     "1. Differentiation (Find the derivative)\n"
                     "2. Integration (Find the integral)\n"
                 )
-                operator = input("> ").strip().lower()
+                operator = input(">> ").strip().lower()
                 print(calculus(operator))
 
             case "4" | "combinatorics":
@@ -53,7 +52,7 @@ def main():
                     "2. Permutation (nPr)\n"
                     "3. Combination (nCr)\n"
                 )
-                operator = input("> ").strip().lower()
+                operator = input(">> ").strip().lower()
                 print(pnc(operator))
 
             case "5" | "log" | "logarithm":
@@ -62,7 +61,7 @@ def main():
                     "1. Log Functions — log base 10, ln (log base e), or log with custom base\n"
                     "2. Antilog Functions — Find values like 10^x, e^x, or any base^x\n"
                 )
-                operator = input("> ").strip().lower()
+                operator = input(">> ").strip().lower()
                 print(logarithm(operator))
 
             case "6" | "trigno" | "trignometry" | "trigonometry":
@@ -72,7 +71,7 @@ def main():
                     "2. Trigonometric Functions (sin, cos, tan)\n"
                     "3. Inverse Trigonometric Functions (asin, acos, atan)\n"
                 )
-                operator = input("> ").strip().lower()
+                operator = input(">> ").strip().lower()
                 print(trignometry(operator))
 
             case _:
@@ -116,6 +115,18 @@ def arithmetic(operator):
 
 def algebra(operator):
     from algebra import simplifies, expands, factorize, substitute
+
+    expr = input("Expression: ")
+    if operator in ("1", "simplify"):
+        return simplifies(expr)
+    elif operator in ("2", "expand"):
+        return expands(expr)
+    elif operator in ("3", "factorise", "factorize"):
+        return factorize(expr)
+    elif operator in ("4", "subsitute"):
+        return substitute(expr)
+    else:
+        return "Invalid operation."
 
 
 def calculus(operator):
