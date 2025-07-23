@@ -38,60 +38,68 @@ def main():
         )
 
         operation = input("> ").strip().lower()
-        if operation in ("arithmetic", "1"):
-            print(
-                "\nChoose an arithmetic operation:\n"
-                "1. Addition (+)\n2. Subtraction (−)\n3. Multiplication (×)\n"
-                "4. Division (÷)\n5. Power (x^y)\n6. Root (√x)\n"
-            )
 
-            operator = input("> ").strip().lower()
-            print(arithmetic(operator))
+        match operation:
+            case "1" | "arithmetic":
+                print(
+                    "\nChoose an arithmetic operation:\n"
+                    "1. Addition (+)\n2. Subtraction (−)\n3. Multiplication (×)\n"
+                    "4. Division (÷)\n5. Power (x^y)\n6. Root (√x)\n"
+                )
+                operator = input("> ").strip().lower()
+                print(arithmetic(operator))
 
-        elif operation in ("algebra", "2"):
-            print(
-                "\nChoose an algebraic operation:\n"
-                "1. Simplify Expression\n"
-                "2. Expand Expression\n"
-                "3. Factor Expression\n"
-                "4. Substitute Values in Expression\n"
-            )
-            operator = input("> ").strip().lower()
-            print(algebra(operator))
+            case "2" | "algebra":
+                print(
+                    "\nChoose an algebraic operation:\n"
+                    "1. Simplify Expression\n"
+                    "2. Expand Expression\n"
+                    "3. Factor Expression\n"
+                    "4. Substitute Values in Expression\n"
+                )
+                operator = input("> ").strip().lower()
+                print(algebra(operator))
 
-        elif operation in ("calculus", "3"):
-            print(
-                "\nChoose a calculus operation:\n1. Differentiation (Find the derivative)\n2. Integration (Find the integral)\n"
-            )
-            operator = input("> ").strip().lower()
-            print(calculus(operator))
+            case "3" | "calculus":
+                print(
+                    "\nChoose a calculus operation:\n"
+                    "1. Differentiation (Find the derivative)\n"
+                    "2. Integration (Find the integral)\n"
+                )
+                operator = input("> ").strip().lower()
+                print(calculus(operator))
 
-        elif operation in ("combinatorics", "4"):
-            print(
-                "\nChoose a combinatorics operation:\n1. Factorial (n!)\n2. Permutation (nPr)\n3. Combination (nCr)\n"
-            )
-            operator = input("> ").strip().lower()
-            print(pnc(operator))
+            case "4" | "combinatorics":
+                print(
+                    "\nChoose a combinatorics operation:\n"
+                    "1. Factorial (n!)\n"
+                    "2. Permutation (nPr)\n"
+                    "3. Combination (nCr)\n"
+                )
+                operator = input("> ").strip().lower()
+                print(pnc(operator))
 
-        elif operation in ("log", "logarithm", "5"):
-            print(
-                "\nSelect a logarithmic operation:\n1. Log Functions — log base 10, ln (log base e), or log with custom base\n"
-                "2. Antilog Functions — Find values like 10^x, e^x, or any base^x\n"
-            )
-            operator = input("> ").strip().lower()
-            print(logarithm(operator))
+            case "5" | "log" | "logarithm":
+                print(
+                    "\nSelect a logarithmic operation:\n"
+                    "1. Log Functions — log base 10, ln (log base e), or log with custom base\n"
+                    "2. Antilog Functions — Find values like 10^x, e^x, or any base^x\n"
+                )
+                operator = input("> ").strip().lower()
+                print(logarithm(operator))
 
-        elif operation in ("trigno", "trignometry", "6"):
-            print(
-                "\nChoose a trigonometric operation:\n1. Angle Conversion (Degrees ↔ Radians)\n"
-                "2. Trigonometric Functions (sin, cos, tan)\n"
-                "3. Inverse Trigonometric Functions (asin, acos, atan)\n"
-            )
-            operator = input("> ").strip().lower()
-            print(trignometry(operator))
+            case "6" | "trigno" | "trignometry" | "trigonometry":
+                print(
+                    "\nChoose a trigonometric operation:\n"
+                    "1. Angle Conversion (Degrees ↔ Radians)\n"
+                    "2. Trigonometric Functions (sin, cos, tan)\n"
+                    "3. Inverse Trigonometric Functions (asin, acos, atan)\n"
+                )
+                operator = input("> ").strip().lower()
+                print(trignometry(operator))
 
-        else:
-            print("Invalid operator.")
+            case _:
+                print("Invalid option.")
 
         ask = input("\nDo you want to continue? (yes/no): ").strip().lower()
         if ask not in ("y", "yes"):
