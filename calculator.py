@@ -57,28 +57,17 @@ def main():
                 print(pnc(operator))
 
             case "5" | "log" | "logarithm":
-                print(
-                    "\nSelect a logarithmic operation:\n"
-                    "1. Log Functions — log base 10, ln (log base e), or log with custom base\n"
-                    "2. Antilog Functions — Find values like 10^x, e^x, or any base^x\n"
-                )
-                operator = input(">> ").strip().lower()
-                print(logarithm(operator))
+                result = logarithm()
+                if result == "back":
+                    continue
 
             case "6" | "trigno" | "trignometry" | "trigonometry":
-                print(
-                    "\nChoose a trigonometric operation:\n"
-                    "1. Angle Conversion (Degrees ↔ Radians)\n"
-                    "2. Trigonometric Functions (sin, cos, tan)\n"
-                    "3. Inverse Trigonometric Functions (asin, acos, atan)\n"
-                )
-                operator = input(">> ").strip().lower()
-                print(trignometry(operator))
+                trignometry()
 
             case _:
                 print("Invalid option.")
 
-        ask = input("\nDo you want to continue? (yes/no): ").strip().lower()
+        ask = input("\nWould you like to return to the main menu? (yes/no): ").strip().lower()
         if ask not in ("y", "yes"):
             print("Goodbye!")
             break
@@ -163,11 +152,85 @@ def pnc(operator):
         return "Invalid combinatorics operation."
 
 
-def logarithm(operator):
+def logarithm():
     from log import log10, ln, log, antilog10, antiln, antilog
 
+    while True:
+        print(
+            "\nChoose the type of logarithmic function:\n"
+            "1. Logarithm Functions — Find log base 10, ln (log base e), or log with custom base\n"
+            "2. Antilogarithm Functions - Find values like 10^x, e^x, or any base^x\n"
+            "0. Back to main menu\n"
+        )
 
-def trignometry(operator):
+        try:
+            choice = int(input("Enter your choice: "))
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+            continue
+        
+        if choice == 0:
+            return "back" 
+    
+        elif choice == 1:
+            print(
+                "\nChoose the logarithmic function:\n"
+                "1. log10(x)\n"
+                "2. ln(x)\n"
+                "3. log(x, base)\n"
+            )
+
+            try:
+                log_choice = int(input("Enter your choice: "))
+                if log_choice == 1:
+                    x = float(input("Enter value of x: "))
+                    print(f"Result: {log10(x):.4f}")
+                elif log_choice == 2:
+                    x = float(input("Enter value of x: "))
+                    print(f"Result: {ln(x):.4f}")
+                elif log_choice == 3:
+                    x = float(input("Enter value of x: "))
+                    base = float(input("Enter base: "))
+                    print(f"Result: {log(x, base):.4f}")
+                else:
+                    print("Invalid choice.")
+            except ValueError:
+                print("Invalid input.")
+
+        elif choice == 2:
+            print(
+                "\nChoose the antilogarithm function:\n"
+                "1. antilog10(x)\n"
+                "2. antiln(x)\n"
+                "3. antilog(x, base)\n"
+            )
+
+            try:
+                anti_choice = int(input("Enter your choice: "))
+                if anti_choice == 1:
+                    x = float(input("Enter value of x: "))
+                    print(f"Result: {antilog10(x):.4f}")
+                elif anti_choice == 2:
+                    x = float(input("Enter value of x: "))
+                    print(f"Result: {antiln(x):.4f}")
+                elif anti_choice == 3:
+                    x = float(input("Enter value of x: "))
+                    base = float(input("Enter base: "))
+                    print(f"Result: {antilog(x, base):.4f}")
+                else:
+                    print("Invalid choice.")
+            except ValueError:
+                print("Invalid input.")
+        
+        else:
+            print("Invalid option. Try again.")
+
+        ask = input("\nDo you want to perform another logarithmic operation? (yes/no): ").strip().lower()
+        if ask not in ("yes", "y"):
+            break
+
+
+def trignometry():
     import re
     from trigno import (
         deg_to_rad,
@@ -186,91 +249,124 @@ def trignometry(operator):
         acsc,
     )
 
-    if operator in ("1", "conversion", "angle conversion"):
-        choice = input(
-            "Convert:\n1. Degrees to Radians\n2. Radians to Degrees\n>> "
-        ).strip()
-        if choice == "1":
-            deg = float(input("Enter angle in degrees: "))
-            return f"{deg}° = {deg_to_rad(deg):.3f} radians"
-        elif choice == "2":
-            rad = float(input("Enter angle in radians: "))
-            return f"{rad} radians = {rad_to_deg(rad):.2f}°"
-        else:
-            return "Invalid conversion option."
+    while True:
+        print(
+            "\nChoose a trigonometric operation:\n"
+            "1. Angle Conversion (Degrees ↔ Radians)\n"
+            "2. Trigonometric Functions (sin, cos, tan)\n"
+            "3. Inverse Trigonometric Functions (asin, acos, atan)\n"
+            "0. Back to main menu\n"
+        )
+        operator = input("Enter your choice: ").strip().lower()
 
-    elif operator in ("2", "functions", "trig", "trigonometric functions"):
-        expression = (
-            input("Enter trig function and angle (e.g. sin 30 or cos(45 + 15)): ")
+        if operator in ("1", "conversion", "angle conversion"):
+            choice = input(
+                "\nConvert:\n1. Degrees to Radians\n2. Radians to Degrees\n>> "
+            ).strip()
+            if choice == "1":
+                deg = float(input("Enter angle in degrees: "))
+                print(f"{deg}° = {deg_to_rad(deg):.3f} radians")
+            elif choice == "2":
+                rad = float(input("Enter angle in radians: "))
+                print(f"{rad} radians = {rad_to_deg(rad):.2f}°")
+            else:
+                print("Invalid conversion option.")
+
+        elif operator in ("2", "functions", "trig", "trigonometric functions"):
+            expression = (
+                input(
+                    "\nEnter Trignometric function and angle (e.g. sin 30 or cos(45 + 15)): "
+                )
+                .strip()
+                .lower()
+            )
+
+            evaluate_simple_expression = re.match(
+                r"([a-z]+)\s+([-+*/\d.]+)$", expression
+            )
+            handle_parentheses = re.match(r"([a-z]+)\(([^()]+)\)$", expression)
+
+            if handle_parentheses:
+                func_name, input_expr = handle_parentheses.groups()
+            elif evaluate_simple_expression:
+                func_name, input_expr = evaluate_simple_expression.groups()
+            else:
+                print("Invalid format. Use: sin 30  or  sin(30+15)")
+                continue
+
+            try:
+                value = eval(input_expr, {"__builtins__": {}}, {})
+                func_map = {
+                    "sin": sin,
+                    "cos": cos,
+                    "tan": tan,
+                    "cot": cot,
+                    "sec": sec,
+                    "csc": csc,
+                }
+                func = func_map.get(func_name)
+                if func is None:
+                    print("Unsupported trigonometric function.")
+                else:
+                    result = func(value)
+                    print(f"{func_name}({input_expr}) = {result:.3f}")
+            except Exception as e:
+                print(f"Error: {e}")
+
+        elif operator in ("3", "inverse", "inverse trig", "inverse functions"):
+            expression = (
+                input(
+                    "\nEnter Inverse Trignometric function and value (e.g. asin 0.5 or asec(2)): "
+                )
+                .strip()
+                .lower()
+            )
+
+            evaluate_simple_expression = re.match(
+                r"([a-z]+)\s+([-+*/\d.]+)$", expression
+            )
+            handle_parentheses = re.match(r"([a-z]+)\(([^()]+)\)$", expression)
+
+            if handle_parentheses:
+                func_name, input_expr = handle_parentheses.groups()
+            elif evaluate_simple_expression:
+                func_name, input_expr = evaluate_simple_expression.groups()
+            else:
+                print("Invalid format. Use: asin 0.5  or  acos(0.5)")
+                continue
+
+            try:
+                value = eval(input_expr, {"__builtins__": {}}, {})
+                inverse_map = {
+                    "asin": asin,
+                    "acos": acos,
+                    "atan": atan,
+                    "acot": acot,
+                    "asec": asec,
+                    "acsc": acsc,
+                }
+                func = inverse_map.get(func_name)
+                if func is None:
+                    print("Unsupported inverse function.")
+                else:
+                    result = func(value)
+                    print(f"{func_name}({input_expr}) = {result:.2f}°")
+            except Exception as e:
+                print(f"Error: {e}")
+
+        elif operator == "0":
+            return
+        
+        else:
+            print("Invalid option. Please choose 1, 2, or 3.")
+
+        ask = (
+            input("\nDo you want to perform another trigonometric operation? (yes/no): ")
             .strip()
             .lower()
         )
-
-        evaluate_simple_expression = re.match(r"([a-z]+)\s+([-+*/\d.]+)$", expression)
-        handle_parentheses = re.match(r"([a-z]+)\(([^()]+)\)$", expression)
-
-        if handle_parentheses:
-            func_name, input_expr = handle_parentheses.groups()
-        elif evaluate_simple_expression:
-            func_name, input_expr = evaluate_simple_expression.groups()
-        else:
-            return "Invalid format. Use: sin 30  or  sin(30+15)"
-
-        try:
-            value = eval(input_expr, {"__builtins__": {}}, {})
-            func_map = {
-                "sin": sin,
-                "cos": cos,
-                "tan": tan,
-                "cot": cot,
-                "sec": sec,
-                "csc": csc,
-            }
-            func = func_map.get(func_name)
-            if func is None:
-                return "Unsupported trigonometric function."
-            result = func(value)
-            return f"{func_name}({input_expr}) = {result:.3f}"
-        except Exception as e:
-            return f"Error: {e}"
-
-    elif operator in ("3", "inverse", "inverse trig", "inverse functions"):
-        expression = (
-            input("Enter inverse trig function and value (e.g. asin 0.5 or asec(2)): ")
-            .strip()
-            .lower()
-        )
-
-        evaluate_simple_expression = re.match(r"([a-z]+)\s+([-+*/\d.]+)$", expression)
-        handle_parentheses = re.match(r"([a-z]+)\(([^()]+)\)$", expression)
-
-        if handle_parentheses:
-            func_name, input_expr = handle_parentheses.groups()
-        elif evaluate_simple_expression:
-            func_name, input_expr = evaluate_simple_expression.groups()
-        else:
-            return "Invalid format. Use: asin 0.5  or  acos(0.5)"
-
-        try:
-            value = eval(input_expr, {"__builtins__": {}}, {})
-            inverse_map = {
-                "asin": asin,
-                "acos": acos,
-                "atan": atan,
-                "acot": acot,
-                "asec": asec,
-                "acsc": acsc,
-            }
-            func = inverse_map.get(func_name)
-            if func is None:
-                return "Unsupported inverse function."
-            result = func(value)
-            return f"{func_name}({input_expr}) = {result:.2f}°"
-        except Exception as e:
-            return f"Error: {e}"
-
-    else:
-        return "Invalid trigonometric operation."
+        if ask not in ("y", "yes"):
+            break
 
 
 if __name__ == "__main__":
