@@ -12,49 +12,34 @@ def main():
             "4. Combinatorics (Factorial, nPr, nCr)\n"
             "5. Logarithm (log, ln, custom base, antilog)\n"
             "6. Trigonometry (Conversion, Trig functions, Inverse functions)\n"
+            "0. Quit Calculator\n"
         )
 
         operation = input(">> ").strip().lower()
 
         match operation:
-            case "1" | "arithmetic":
-                print(
-                    "\nChoose an arithmetic operation:\n"
-                    "1. Addition (+)\n2. Subtraction (−)\n3. Multiplication (×)\n"
-                    "4. Division (÷)\n5. Power (x^y)\n6. Root (√x)\n"
-                )
-                operator = input(">> ").strip().lower()
-                print(arithmetic(operator))
+            case "0" | "quit" | "exit":
+                print("Goodbye!")
+                break
+            case "1" | "arithmetic" | "basic":
+                result = arithmetic()
+                if result == "back":
+                    continue
 
             case "2" | "algebra":
-                print(
-                    "\nChoose an algebraic operation:\n"
-                    "1. Simplify Expression\n"
-                    "2. Expand Expression\n"
-                    "3. Factor Expression\n"
-                    "4. Substitute Values in Expression\n"
-                )
-                operator = input(">> ").strip().lower()
-                print(algebra(operator))
+                result = algebra()
+                if result == "back":
+                    continue
 
             case "3" | "calculus":
-                print(
-                    "\nChoose a calculus operation:\n"
-                    "1. Differentiation (Find the derivative)\n"
-                    "2. Integration (Find the integral)\n"
-                )
-                operator = input(">> ").strip().lower()
-                print(calculus(operator))
+                result = calculus()
+                if result == "back":
+                    continue
 
             case "4" | "combinatorics":
-                print(
-                    "\nChoose a combinatorics operation:\n"
-                    "1. Factorial (n!)\n"
-                    "2. Permutation (nPr)\n"
-                    "3. Combination (nCr)\n"
-                )
-                operator = input(">> ").strip().lower()
-                print(pnc(operator))
+                result = pnc()
+                if result == "back":
+                    continue
 
             case "5" | "log" | "logarithm":
                 result = logarithm()
@@ -62,94 +47,228 @@ def main():
                     continue
 
             case "6" | "trigno" | "trignometry" | "trigonometry":
-                trignometry()
+                result = trignometry()
+                if result == "back":
+                    continue
 
             case _:
                 print("Invalid option.")
 
-        ask = input("\nWould you like to return to the main menu? (yes/no): ").strip().lower()
-        if ask not in ("y", "yes"):
-            print("Goodbye!")
-            break
+        # ask = (
+        #     input("\nWould you like to return to the main menu? (yes/no): ")
+        #     .strip()
+        #     .lower()
+        # )
+        # if ask not in ("y", "yes"):
+        #     print("See you next time!")
+        #     break
 
 
-def arithmetic(operator):
+def arithmetic():
     from basic import add, subtract, multiply, divide, power
 
-    if operator in ("root", "√", "r", "6"):
-        a = int(input("Number: "))
-        if a >= 0:
-            root = a**0.5
-            return f"{root:.2f}"
+    while True:
+        print(
+            "\nChoose an arithmetic operation:\n"
+            "1. Addition (+)\n"
+            "2. Subtraction (-)\n"
+            "3. Multiplication (×)\n"
+            "4. Division (÷)\n"
+            "5. Power (x^y)\n"
+            "6. Square Root (√x)\n"
+            "0. Back to main menu\n"
+        )
+
+        operator = input(">> ").strip().lower()
+
+        if operator in ("0", "back"):
+            return "back"
+
+        elif operator in ("6", "root", "√", "r"):
+            try:
+                a = float(input("Enter number: "))
+                if a >= 0:
+                    root = a**0.5
+                    print(f"√{a} = {root:.2f}")
+                else:
+                    print("Cannot determine root of imaginary numbers")
+            except ValueError:
+                print("Invalid input. Please enter a valid number.")
+
+        elif operator in ("5", "power", "^", "p"):
+            try:
+                a = float(input("Enter number: "))
+                b = float(input("Enter power: "))
+                print(f"{a}^{b} = {power(a, b):.2f}")
+            except ValueError:
+                print("Invalid input. Please enter numbers.")
+
+        elif operator in (
+            "1",
+            "+",
+            "addition",
+            "sum",
+            "2",
+            "-",
+            "subtraction",
+            "3",
+            "*",
+            "×",
+            "multiplication",
+            "4",
+            "/",
+            "÷",
+            "division",
+        ):
+
+            try:
+                a = float(input("Enter first number: "))
+                b = float(input("Enter second number: "))
+
+                if operator in ("1", "+", "addition", "sum"):
+                    print(f"{a} + {b} = {add(a, b)}")
+                elif operator in ("2", "-", "subtraction"):
+                    print(f"{a} - {b} = {subtract(a, b)}")
+                elif operator in ("3", "*", "×", "multiplication"):
+                    print(f"{a} × {b} = {multiply(a, b)}")
+                elif operator in ("4", "/", "÷", "division"):
+                    result = divide(a, b)
+                    print(f"{a} ÷ {b} = {result:.2f}")
+            except ValueError:
+                print("Invalid input. Please enter valid numbers.")
+            except ZeroDivisionError:
+                print("Cannot divide by zero.")
+
         else:
-            return "Cannot determine root of imaginary numbers"
+            print("Invalid option. Please try again.")
 
-    elif operator in ("power", "^", "p", "5"):
-        a = float(input("Number: "))
-        b = float(input("Power: "))
-        return f"{power(a, b):.2f}"
-
-    a = int(input("First number: "))
-    b = int(input("Second number: "))
-    if operator in ("addition", "+", "sum", "1"):
-        return add(a, b)
-    elif operator in ("subtraction", "-", "2"):
-        return subtract(a, b)
-    elif operator in ("multiplication", "*", "×", "3"):
-        return multiply(a, b)
-    elif operator in ("division", "/", "÷", "4"):
-        return f"{divide(a, b):.2f}"
-    else:
-        return "Invalid operation."
+        ask = (
+            input("\nDo you want to perform another arithmetic operation? (yes/no): ")
+            .strip()
+            .lower()
+        )
+        if ask not in ("y", "yes"):
+            break
 
 
 def algebra(operator):
     from algebra import simplifies, expands, factorize, substitute
 
-    expression = input("Expression: ")
-    if operator in ("1", "simplify"):
-        return simplifies(expression)
-    elif operator in ("2", "expand"):
-        return expands(expression)
-    elif operator in ("3", "factorise", "factorize"):
-        return factorize(expression)
-    elif operator in ("4", "subsitute"):
-        return substitute(expression)
-    else:
-        return "Invalid operation."
+    while True:
+        print(
+            "\nChoose an algebraic operation:\n"
+            "1. Simplify Expression\n"
+            "2. Expand Expression\n"
+            "3. Factor Expression\n"
+            "4. Substitute Values in Expression\n"
+            "0. Back to main menu\n"
+        )
+        operator = input(">> ").strip().lower()
+
+        if operator in ("0", "back"):
+            return "back"
+
+        expression = input("\nExpression: ")
+
+        if operator in ("1", "simplify"):
+            print(simplifies(expression))
+
+        elif operator in ("2", "expand"):
+            print(expands(expression))
+
+        elif operator in ("3", "factorise", "factorize"):
+            print(factorize(expression))
+
+        elif operator in ("4", "subsitute"):
+            print(substitute(expression))
+
+        else:
+            print("Invalid operation.")
+
+        ask = (
+            input("\nWould you like to solve another algebraic expression?(yes/no): ")
+            .strip()
+            .lower()
+        )
+        if ask not in ("yes", "y"):
+            break
 
 
-def calculus(operator):
-    from calculus_module import dif, integrates
+def calculus():
+    from calculus_module import dif, integrates, auto_detect_var
 
-    if operator in ("differentiation", "1", "d"):
-        d = input("Enter the expression to differentiate: ")
-        wrt = input("With respect to: ")
-        return dif(d, wrt)
-    elif operator in ("integration", "2", "i"):
-        i = input("Enter the expression to integrate: ")
-        wrt = input("With respect to: ")
-        return integrates(i, wrt)
-    else:
-        return "Invalid calculus operation."
+    while True:
+        print(
+            "\nChoose a calculus operation:\n"
+            "1. Differentiation (Find the derivative)\n"
+            "2. Integration (Find the integral)\n"
+            "0. Back to main menu\n"
+        )
+
+        operator = input(">> ").strip().lower()
+
+        if operator in ("0", "back"):
+            return "back"
+
+        elif operator in ("differentiation", "1", "d"):
+            d = input("Enter the expression to differentiate: ")
+            wrt = auto_detect_var(d)
+            print(f"f'({wrt}): {dif(d, wrt)}")
+
+        elif operator in ("integration", "2", "i"):
+            i = input("Enter the expression to integrate: ")
+            wrt = auto_detect_var(i)
+            print(f"∫f({wrt})dx = {integrates(i, wrt)} + C")
+
+        else:
+            print("Invalid calculus operation.")
+
+        ask = (
+            input("\nContinue with more derivatives or integrals?(yes/no): ")
+            .strip()
+            .lower()
+        )
+        if ask not in ("yes", "y"):
+            break
 
 
 def pnc(operator):
     from combinatorics import fact, permutation, combination
 
-    if operator in ("factorial", "f", "1"):
-        n = int(input("Enter n: "))
-        return f"n! = {fact(n)}"
-    elif operator in ("permutation", "p", "2"):
-        n = int(input("n = "))
-        r = int(input("r = "))
-        return f"nPr = {permutation(n, r)}"
-    elif operator in ("combination", "c", "3"):
-        n = int(input("n = "))
-        r = int(input("r = "))
-        return f"nCr = {combination(n, r)}"
-    else:
-        return "Invalid combinatorics operation."
+    while True:
+        print(
+            "\nChoose a Combinatorics operation:\n"
+            "1. Factorial (n!)\n"
+            "2. Permutation (nPr)\n"
+            "3. Combination (nCr)\n"
+            "0. Back to main menu\n"
+        )
+
+        operator = input(">> ").strip().lower()
+
+        if operator in ("0", "back"):
+            return "back"
+
+        elif operator in ("factorial", "f", "1"):
+            n = int(input("Enter n: "))
+            print(f"n! = {fact(n)}")
+
+        elif operator in ("permutation", "p", "2"):
+            n = int(input("n = "))
+            r = int(input("r = "))
+            print(f"nPr = {permutation(n, r)}")
+
+        elif operator in ("combination", "c", "3"):
+            n = int(input("n = "))
+            r = int(input("r = "))
+            print(f"nCr = {combination(n, r)}")
+
+        else:
+            print("Invalid operation.")
+
+        ask = input("\nContinue with Combinatorics? (yes/no): ").strip().lower()
+        if ask not in ("yes", "y"):
+            break
 
 
 def logarithm():
@@ -164,15 +283,15 @@ def logarithm():
         )
 
         try:
-            choice = int(input("Enter your choice: "))
+            choice = input("Enter your choice: ")
         except ValueError:
             print("Invalid input. Please enter a number.")
             continue
-        
-        if choice == 0:
-            return "back" 
-    
-        elif choice == 1:
+
+        if choice in ("0", "back"):
+            return "back"
+
+        elif choice in ("1", "log", "logarithm", "simple"):
             print(
                 "\nChoose the logarithmic function:\n"
                 "1. log10(x)\n"
@@ -197,7 +316,7 @@ def logarithm():
             except ValueError:
                 print("Invalid input.")
 
-        elif choice == 2:
+        elif choice in ("2", "antilog", "antilogarithm"):
             print(
                 "\nChoose the antilogarithm function:\n"
                 "1. antilog10(x)\n"
@@ -221,17 +340,21 @@ def logarithm():
                     print("Invalid choice.")
             except ValueError:
                 print("Invalid input.")
-        
+
         else:
             print("Invalid option. Try again.")
 
-        ask = input("\nDo you want to perform another logarithmic operation? (yes/no): ").strip().lower()
+        ask = (
+            input("\nDo you want to perform another logarithmic operation? (yes/no): ")
+            .strip()
+            .lower()
+        )
         if ask not in ("yes", "y"):
             break
 
 
 def trignometry():
-    import re
+    from re import match
     from trigno import (
         deg_to_rad,
         rad_to_deg,
@@ -259,7 +382,10 @@ def trignometry():
         )
         operator = input("Enter your choice: ").strip().lower()
 
-        if operator in ("1", "conversion", "angle conversion"):
+        if operator == "0":
+            return "back"
+
+        elif operator in ("1", "conversion", "angle conversion"):
             choice = input(
                 "\nConvert:\n1. Degrees to Radians\n2. Radians to Degrees\n>> "
             ).strip()
@@ -281,10 +407,8 @@ def trignometry():
                 .lower()
             )
 
-            evaluate_simple_expression = re.match(
-                r"([a-z]+)\s+([-+*/\d.]+)$", expression
-            )
-            handle_parentheses = re.match(r"([a-z]+)\(([^()]+)\)$", expression)
+            evaluate_simple_expression = match(r"([a-z]+)\s+([-+*/\d.]+)$", expression)
+            handle_parentheses = match(r"([a-z]+)\(([^()]+)\)$", expression)
 
             if handle_parentheses:
                 func_name, input_expr = handle_parentheses.groups()
@@ -322,10 +446,8 @@ def trignometry():
                 .lower()
             )
 
-            evaluate_simple_expression = re.match(
-                r"([a-z]+)\s+([-+*/\d.]+)$", expression
-            )
-            handle_parentheses = re.match(r"([a-z]+)\(([^()]+)\)$", expression)
+            evaluate_simple_expression = match(r"([a-z]+)\s+([-+*/\d.]+)$", expression)
+            handle_parentheses = match(r"([a-z]+)\(([^()]+)\)$", expression)
 
             if handle_parentheses:
                 func_name, input_expr = handle_parentheses.groups()
@@ -353,15 +475,13 @@ def trignometry():
                     print(f"{func_name}({input_expr}) = {result:.2f}°")
             except Exception as e:
                 print(f"Error: {e}")
-
-        elif operator == "0":
-            return
-        
         else:
-            print("Invalid option. Please choose 1, 2, or 3.")
+            print("Invalid option.")
 
         ask = (
-            input("\nDo you want to perform another trigonometric operation? (yes/no): ")
+            input(
+                "\nDo you want to perform another trigonometric operation? (yes/no): "
+            )
             .strip()
             .lower()
         )
