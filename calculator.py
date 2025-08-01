@@ -1,6 +1,7 @@
 # Error handling not done
 # Add a Menu option
 
+
 def main():
     while True:
         print(
@@ -22,7 +23,7 @@ def main():
                     "1. Addition (+)\n2. Subtraction (−)\n3. Multiplication (×)\n"
                     "4. Division (÷)\n5. Power (x^y)\n6. Root (√x)\n"
                 )
-                operator = input("> ").strip().lower()
+                operator = input(">> ").strip().lower()
                 print(arithmetic(operator))
 
             case "2" | "algebra":
@@ -116,15 +117,15 @@ def arithmetic(operator):
 def algebra(operator):
     from algebra import simplifies, expands, factorize, substitute
 
-    expr = input("Expression: ")
+    expression = input("Expression: ")
     if operator in ("1", "simplify"):
-        return simplifies(expr)
+        return simplifies(expression)
     elif operator in ("2", "expand"):
-        return expands(expr)
+        return expands(expression)
     elif operator in ("3", "factorise", "factorize"):
-        return factorize(expr)
+        return factorize(expression)
     elif operator in ("4", "subsitute"):
-        return substitute(expr)
+        return substitute(expression)
     else:
         return "Invalid operation."
 
@@ -167,6 +168,7 @@ def logarithm(operator):
 
 
 def trignometry(operator):
+    import re
     from trigno import (
         deg_to_rad,
         rad_to_deg,
@@ -183,6 +185,92 @@ def trignometry(operator):
         asec,
         acsc,
     )
+
+    if operator in ("1", "conversion", "angle conversion"):
+        choice = input(
+            "Convert:\n1. Degrees to Radians\n2. Radians to Degrees\n>> "
+        ).strip()
+        if choice == "1":
+            deg = float(input("Enter angle in degrees: "))
+            return f"{deg}° = {deg_to_rad(deg):.3f} radians"
+        elif choice == "2":
+            rad = float(input("Enter angle in radians: "))
+            return f"{rad} radians = {rad_to_deg(rad):.2f}°"
+        else:
+            return "Invalid conversion option."
+
+    elif operator in ("2", "functions", "trig", "trigonometric functions"):
+        expression = (
+            input("Enter trig function and angle (e.g. sin 30 or cos(45 + 15)): ")
+            .strip()
+            .lower()
+        )
+
+        evaluate_simple_expression = re.match(r"([a-z]+)\s+([-+*/\d.]+)$", expression)
+        handle_parentheses = re.match(r"([a-z]+)\(([^()]+)\)$", expression)
+
+        if handle_parentheses:
+            func_name, input_expr = handle_parentheses.groups()
+        elif evaluate_simple_expression:
+            func_name, input_expr = evaluate_simple_expression.groups()
+        else:
+            return "Invalid format. Use: sin 30  or  sin(30+15)"
+
+        try:
+            value = eval(input_expr, {"__builtins__": {}}, {})
+            func_map = {
+                "sin": sin,
+                "cos": cos,
+                "tan": tan,
+                "cot": cot,
+                "sec": sec,
+                "csc": csc,
+            }
+            func = func_map.get(func_name)
+            if func is None:
+                return "Unsupported trigonometric function."
+            result = func(value)
+            return f"{func_name}({input_expr}) = {result:.3f}"
+        except Exception as e:
+            return f"Error: {e}"
+
+    elif operator in ("3", "inverse", "inverse trig", "inverse functions"):
+        expression = (
+            input("Enter inverse trig function and value (e.g. asin 0.5 or asec(2)): ")
+            .strip()
+            .lower()
+        )
+
+        evaluate_simple_expression = re.match(r"([a-z]+)\s+([-+*/\d.]+)$", expression)
+        handle_parentheses = re.match(r"([a-z]+)\(([^()]+)\)$", expression)
+
+        if handle_parentheses:
+            func_name, input_expr = handle_parentheses.groups()
+        elif evaluate_simple_expression:
+            func_name, input_expr = evaluate_simple_expression.groups()
+        else:
+            return "Invalid format. Use: asin 0.5  or  acos(0.5)"
+
+        try:
+            value = eval(input_expr, {"__builtins__": {}}, {})
+            inverse_map = {
+                "asin": asin,
+                "acos": acos,
+                "atan": atan,
+                "acot": acot,
+                "asec": asec,
+                "acsc": acsc,
+            }
+            func = inverse_map.get(func_name)
+            if func is None:
+                return "Unsupported inverse function."
+            result = func(value)
+            return f"{func_name}({input_expr}) = {result:.2f}°"
+        except Exception as e:
+            return f"Error: {e}"
+
+    else:
+        return "Invalid trigonometric operation."
 
 
 if __name__ == "__main__":
