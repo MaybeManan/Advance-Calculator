@@ -1,14 +1,16 @@
 from sympy import symbols, diff, integrate, sympify
 
 
-def dif(d, x):
+def dif(d):
     expression = sympify(d)
-    return diff(expression, x)
+    wrt = auto_detect_var(d)
+    return diff(expression, wrt)
 
 
-def integrates(i, x):
+def integrates(i):
     expression = sympify(i)
-    return integrate(expression, x)
+    wrt = auto_detect_var(i)
+    return integrate(expression, wrt)
 
 
 def auto_detect_var(expression):
@@ -25,3 +27,7 @@ def auto_detect_var(expression):
             if sym.name == var:
                 return sym
         raise ValueError(f"Variable '{var}' not found in the expression.")
+
+
+
+print(type(integrates("x")))

@@ -1,11 +1,10 @@
-# Error handling not done
-# Add a Menu option
+# Error handling is in progress.
 
 
 def main():
     while True:
         print(
-            "Choose a category:\n"
+            "\nChoose a category:\n"
             "1. Arithmetic (Basic Math: +, −, ×, ÷, powers, roots)\n"
             "2. Algebra and Exponents\n"
             "3. Calculus (Differentiation and Integration)\n"
@@ -21,47 +20,36 @@ def main():
             case "0" | "quit" | "exit":
                 print("Goodbye!")
                 break
+
             case "1" | "arithmetic" | "basic":
-                result = arithmetic()
-                if result == "back":
-                    continue
+                arithmetic()
 
             case "2" | "algebra":
-                result = algebra()
-                if result == "back":
-                    continue
+                algebra()
 
             case "3" | "calculus":
-                result = calculus()
-                if result == "back":
-                    continue
+                calculus()
 
             case "4" | "combinatorics":
-                result = pnc()
-                if result == "back":
-                    continue
+                pnc()
 
             case "5" | "log" | "logarithm":
-                result = logarithm()
-                if result == "back":
-                    continue
+                logarithm()
 
             case "6" | "trigno" | "trignometry" | "trigonometry":
-                result = trignometry()
-                if result == "back":
-                    continue
+                trignometry()
 
             case _:
-                print("Invalid option.")
+                print("\nInvalid option.")
 
-        # ask = (
-        #     input("\nWould you like to return to the main menu? (yes/no): ")
-        #     .strip()
-        #     .lower()
-        # )
-        # if ask not in ("y", "yes"):
-        #     print("See you next time!")
-        #     break
+                ask = (
+                    input("\nWould you like to return to the main menu? (yes/no): ")
+                    .strip()
+                    .lower()
+                )
+                if ask not in ("y", "yes"):
+                    print("See you next time!")
+                    break
 
 
 def arithmetic():
@@ -82,7 +70,7 @@ def arithmetic():
         operator = input(">> ").strip().lower()
 
         if operator in ("0", "back"):
-            return "back"
+            break
 
         elif operator in ("6", "root", "√", "r"):
             try:
@@ -166,12 +154,12 @@ def algebra(operator):
         operator = input(">> ").strip().lower()
 
         if operator in ("0", "back"):
-            return "back"
+            break
 
         expression = input("\nExpression: ")
 
         if operator in ("1", "simplify"):
-            print(simplifies(expression))
+            print(f"{simplifies(expression)}")
 
         elif operator in ("2", "expand"):
             print(expands(expression))
@@ -208,17 +196,17 @@ def calculus():
         operator = input(">> ").strip().lower()
 
         if operator in ("0", "back"):
-            return "back"
+            break
 
         elif operator in ("differentiation", "1", "d"):
             d = input("Enter the expression to differentiate: ")
             wrt = auto_detect_var(d)
-            print(f"f'({wrt}): {dif(d, wrt)}")
+            print(f"f'({wrt}): {dif(d)}")
 
         elif operator in ("integration", "2", "i"):
             i = input("Enter the expression to integrate: ")
             wrt = auto_detect_var(i)
-            print(f"∫f({wrt})dx = {integrates(i, wrt)} + C")
+            print(f"∫f({wrt})dx = {integrates(i)} + C")
 
         else:
             print("Invalid calculus operation.")
@@ -247,7 +235,7 @@ def pnc(operator):
         operator = input(">> ").strip().lower()
 
         if operator in ("0", "back"):
-            return "back"
+            break
 
         elif operator in ("factorial", "f", "1"):
             n = int(input("Enter n: "))
@@ -289,7 +277,7 @@ def logarithm():
             continue
 
         if choice in ("0", "back"):
-            return "back"
+            break
 
         elif choice in ("1", "log", "logarithm", "simple"):
             print(
@@ -383,7 +371,7 @@ def trignometry():
         operator = input("Enter your choice: ").strip().lower()
 
         if operator == "0":
-            return "back"
+            break
 
         elif operator in ("1", "conversion", "angle conversion"):
             choice = input(
