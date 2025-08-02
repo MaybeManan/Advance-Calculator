@@ -4,3 +4,6 @@
 __pycache__/
 *.pyc
 *.pyo
+
+# Ignore pytest cache
+.pytest_cache/
