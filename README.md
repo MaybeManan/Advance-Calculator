@@ -60,7 +60,7 @@ pip install pytest
 Run the main script:
 
 ```bash
-python main.py
+python calculator.py
 ```
 
 Follow the interactive menu to select the type of operation:
