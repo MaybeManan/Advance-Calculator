@@ -1,0 +1,1 @@
+Thank you for your interest! Currently, this project is not accepting external contributions as it is a personal project.
