@@ -100,7 +100,7 @@ Aspiring computer scientist. Passionate about absurdism, logic, and building thi
 
 ---
 
-## 🪪 License
+## 📜 License
 
 This project is licensed under the MIT License.  
 Feel free to use, modify, or contribute.
